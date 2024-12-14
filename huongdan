@@ -1,0 +1,8 @@
+- Đầu tiên người dùng cần nhập tên thiết bị vào prompt để hệ thống so sánh thiết bị mình nhập và promt
+có trong db hay không, nếu có thì sẽ trả về kết quả tồn kho của thiết bị đó
+
+- trường hợp người dùng nhập tên thiết bị gần khớp thì sẽ sử dụng fuzzy matching để so sánh tên thiết bị
+người dùng nhập có khớp với tên thiết bị trong database hay không, nếu so sánh giống hơn hoặc bằng 70%
+thì sẽ trả về thông tin tồn kho của thiết bị đó
+
+- Note: Fuzzy Matching dùng để so sánh các chuỗi để xem các chuỗi đó có sự tương đồng với nhau hay không
