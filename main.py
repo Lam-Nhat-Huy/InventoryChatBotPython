@@ -27,7 +27,7 @@ def get_all_equipment_names():
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
-            # Truy vấn danh sách tên thiết bị từ bảng 'equipments'
+            # Truy vấn danh sách tên thiết bị
             sql = "SELECT name FROM equipments"
             cursor.execute(sql)
             equipment_names = [row['name'] for row in cursor.fetchall()]
@@ -48,7 +48,7 @@ def get_all_equipment_names():
 @app.route('/api/inventory-chatbot', methods=['GET'])
 def get_inventory():
     global last_asked_equipment
-    # Lấy câu hỏi từ query string
+    # Lấy câu hỏi từ thanh tim kiếm thiết bị
     prompt = request.args.get('prompt')
     if not prompt:
         return jsonify({"error": "Vui lòng cung cấp câu hỏi"}), 400
@@ -60,7 +60,7 @@ def get_inventory():
         return get_low_stock_items()
 
     # Kiểm tra từ khóa liên quan đến tồn kho thiết bị cụ thể
-    match = re.search(r"(số lượng tồn kho của|tình trạng tồn kho của|còn bao nhiêu|tồn kho của) (.+)", prompt, re.IGNORECASE)
+    match = re.search(r"(tồn kho của) (.+)", prompt, re.IGNORECASE)
     if match:
         # Lấy tên thiết bị từ câu hỏi
         equipment_name = match.group(2).strip()
@@ -70,7 +70,7 @@ def get_inventory():
         if last_asked_equipment:
             equipment_name = last_asked_equipment
         else:
-            return jsonify({"error": "Không hiểu câu hỏi của bạn. Vui lòng thử lại."}), 400
+            return jsonify({"error": "Tính năng này chúng tôi đang phát triển ạ."}), 400
 
     # Gọi hàm tìm kiếm tồn kho của thiết bị
     return find_equipment_inventory(equipment_name)
@@ -124,14 +124,14 @@ def find_equipment_inventory(equipment_name):
         connection.close()
 
 
-# Sử dụng Fuzzy Matching để tìm tên thiết bị gần đúng
+# Sử dụng fuzzy matching để tìm tên thiết bị gần đúng
 def find_best_match(equipment_name, cursor):
-    # Lấy tất cả tên thiết bị từ bảng 'equipments'
+    # Lấy tất cả tên thiết bị từ bảng thieets bị
     sql = "SELECT e.name FROM equipments e"
     cursor.execute(sql)
     all_equipment_names = [row['name'] for row in cursor.fetchall()]
 
-    # Dùng RapidFuzz để tìm tên khớp nhất với độ chính xác cao nhất
+    # Dùng thư viện rapid fuzzz để tìm tên thiết bị ở trong db khớp nhất để hiển thị ra kết quả
     best_match = process.extractOne(equipment_name, all_equipment_names, scorer=fuzz.ratio)
     print(best_match)
 

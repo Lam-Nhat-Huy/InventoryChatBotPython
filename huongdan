@@ -5,4 +5,4 @@ có trong db hay không, nếu có thì sẽ trả về kết quả tồn kho c�
 người dùng nhập có khớp với tên thiết bị trong database hay không, nếu so sánh giống hơn hoặc bằng 70%
 thì sẽ trả về thông tin tồn kho của thiết bị đó
 
-- Note: Fuzzy Matching dùng để so sánh các chuỗi để xem các chuỗi đó có sự tương đồng với nhau hay không
+- Note: Fuzzy Matching là dùng để so sánh các chuỗi để xem các chuỗi đó có sự tương đồng với nhau hay không
